@@ -1,0 +1,20 @@
+    -----------------------------------------------
+    -- YOUR CUSTOM ITEMS
+    -----------------------------------------------
+    pickaxe        = { name = 'pickaxe',        label = 'Pickaxe',        weight = 100,  type = 'item', image = 'pickaxe.png',        unique = false, useable = false, shouldClose = true, description = 'mining tool for hitting them rocks'},
+    rock           = { name = 'rock',           label = 'Rock',           weight = 1000, type = 'item', image = 'rock.png',           unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
+    saltrock       = { name = 'saltrock',       label = 'Salt Rock',      weight = 1000, type = 'item', image = 'saltrock.png',       unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
+    salt           = { name = 'salt',           label = 'Salt',           weight = 100,  type = 'item', image = 'salt.png',           unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
+    clay           = { name = 'clay',           label = 'Clay',           weight = 100,  type = 'item', image = 'clay.png',           unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
+    coal           = { name = 'coal',           label = 'Coal',           weight = 100,  type = 'item', image = 'coal.png',           unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
+    copper         = { name = 'copper',         label = 'Copper',         weight = 100,  type = 'item', image = 'copper.png',         unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
+    iron           = { name = 'iron',           label = 'Iron',           weight = 100,  type = 'item', image = 'iron.png',           unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
+    nitrite        = { name = 'nitrite',        label = 'Nitrite',        weight = 100,  type = 'item', image = 'nitrite.png',        unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
+    sulfur         = { name = 'sulfur',         label = 'Sulfur',         weight = 100,  type = 'item', image = 'sulfur.png',         unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
+    zinc           = { name = 'zinc',           label = 'Zinc',           weight = 100,  type = 'item', image = 'zinc.png',           unique = false, useable = false, shouldClose = true, description = 'Output from miningr' },
+    lead           = { name = 'lead',           label = 'Lead',           weight = 100,  type = 'item', image = 'lead.png',           unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
+    diamond_uncut  = { name = 'diamond_uncut',  label = 'Uncut Diamond',  weight = 100,  type = 'item', image = 'diamond_uncut.png',  unique = false, useable = false, shouldClose = true, description = 'uncut gem stone'},
+    ruby_uncut     = { name = 'ruby_uncut',     label = 'Uncut Ruby',     weight = 100,  type = 'item', image = 'ruby_uncut.png',     unique = false, useable = false, shouldClose = true, description = 'uncut gem stone'},
+    emerald_uncut  = { name = 'emerald_uncut',  label = 'Uncut Emerald',  weight = 100,  type = 'item', image = 'emerald_uncut.png',  unique = false, useable = false, shouldClose = true, description = 'uncut gem stone'},
+    opal_uncut     = { name = 'opal_uncut',     label = 'Uncut Opal',     weight = 100,  type = 'item', image = 'opal_uncut.png',     unique = false, useable = false, shouldClose = true, description = 'uncut gem stone'},
+    sapphire_uncut = { name = 'sapphire_uncut', label = 'Uncut Sapphire', weight = 100,  type = 'item', image = 'sapphire_uncut.png', unique = false, useable = false, shouldClose = true, description = 'uncut gem stone'},

@@ -1,0 +1,18 @@
+{
+    "cl_lang_1" : "Mine Rock",
+    "cl_lang_2" : "Already been mined!",
+    "cl_lang_3" : "You are busy at the moment!",
+    "cl_lang_4" : "You need a pickaxe!",
+    "cl_lang_5" : "You can't place that here",
+    "cl_lang_6" : "Drill Rocks",
+    "cl_lang_7" : "Rock",
+    "cl_lang_8" : "Rock Salt",
+    "cl_lang_9" : "Amount",
+    "cl_lang_10" : "You don't have that much!",
+    "cl_lang_11" : "Drilling Rock",
+    "sv_lang_1" : "creates a mining rock node (admin only)",
+    "sv_lang_2" : "creates a mining salt rock node (admin only)",
+    "sv_lang_3" : "loading ",
+    "sv_lang_4" : " with ID: ",
+    "sv_lang_5" : "mining cronjob ran"
+}
