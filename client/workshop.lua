@@ -72,55 +72,70 @@ RegisterNetEvent('rex-mining:client:drillrocksinput', function()
             required = true
         },
         { 
-            type = 'input',
+            type = 'number',
             label = locale('cl_lang_9'),
+            default = 1,
+            min = 1,
+            max = 100,
             required = true
         },
     })
     if not input then return end
-    local hasItem = RSGCore.Functions.HasItem(input[1], tonumber(input[2]))
-    if not hasItem then 
-        lib.notify({ title = locale('cl_lang_10'), duration = 5000, type = 'error' }) 
+    
+    local amount = tonumber(input[2])
+    if not amount or amount < 1 or amount > 100 then
+        lib.notify({ title = locale('cl_lang_13'), duration = Config.NotificationDuration, type = 'error' })
         return
     end
-    TriggerEvent('rex-mining:client:dodrilling', input[1], tonumber(input[2]))
+    
+    local hasItem = RSGCore.Functions.HasItem(input[1], amount)
+    if not hasItem then 
+        lib.notify({ title = locale('cl_lang_10'), duration = Config.NotificationDuration, type = 'error' }) 
+        return
+    end
+    TriggerEvent('rex-mining:client:dodrilling', input[1], amount)
 end)
 
 ----------------------------------------------------
 -- drill rocks function
 ----------------------------------------------------
 local function DrillingRocks(item, amount)
-    DrillingRemaining = amount
+    local totalAmount = amount
+    local DrillingRemaining = amount
     CreateThread(function()
-        while true do
-            if DrillingRemaining > 0 then
-                LocalPlayer.state:set("inv_busy", true, true) -- lock inventory
-                lib.progressBar({
-                    duration = Config.DrillTime,
-                    position = 'bottom',
-                    useWhileDead = false,
-                    canCancel = true,
-                    disableControl = true,
-                    disable = {
-                        move = true,
-                        mouse = false,
-                    },
-                    label = locale('cl_lang_11'),
-                    anim = {
-                        dict = 'mech_inventory@crafting@fallbacks',
-                        clip = 'full_craft_and_stow',
-                        flag = 27,
-                    },
-                })
-                DrillingRemaining = DrillingRemaining -1
-                TriggerServerEvent('rex-mining:server:finishdrilling', item)
-                if DrillingRemaining == 0 then
-                    LocalPlayer.state:set("inv_busy", false, true) -- unlock inventory
-                    return 
-                end
+        while DrillingRemaining > 0 do
+            LocalPlayer.state:set("inv_busy", true, true) -- lock inventory
+            local currentDrill = totalAmount - DrillingRemaining + 1
+            local progressLabel = locale('cl_lang_14'):format(currentDrill, totalAmount)
+            
+            local success = lib.progressBar({
+                duration = Config.DrillTime,
+                position = 'bottom',
+                useWhileDead = false,
+                canCancel = true,
+                disableControl = true,
+                disable = {
+                    move = true,
+                    mouse = false,
+                },
+                label = progressLabel,
+                anim = {
+                    dict = 'mech_inventory@crafting@fallbacks',
+                    clip = 'full_craft_and_stow',
+                    flag = 27,
+                },
+            })
+            
+            if not success then
+                LocalPlayer.state:set("inv_busy", false, true)
+                return
             end
-            Wait(0)
+            
+            DrillingRemaining = DrillingRemaining - 1
+            TriggerServerEvent('rex-mining:server:finishdrilling', item)
+            Wait(100)
         end
+        LocalPlayer.state:set("inv_busy", false, true) -- unlock inventory
     end)
 end
 
@@ -132,6 +147,6 @@ RegisterNetEvent('rex-mining:client:dodrilling', function(item, amount)
     if hasItem then
         DrillingRocks(item, amount)
     else
-        lib.notify({ title = locale('cl_lang_10'), duration = 5000, type = 'error' })
+        lib.notify({ title = locale('cl_lang_10'), duration = Config.NotificationDuration, type = 'error' })
     end
 end)

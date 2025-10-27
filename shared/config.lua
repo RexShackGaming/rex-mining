@@ -14,19 +14,29 @@ Config.PromptRotateRight = 'Rotate Right'
 ---------------------------------------------
 -- settings
 ---------------------------------------------
-Config.EnableVegModifier = true -- if set true clears vegetation
-Config.RockProp = `mp_sca_rock_grp_l_03` -- rock prop
-Config.SaltRockProp = `mp_sca_rock_grp_l_03` -- rock prop
-Config.RockDriller = `p_drillpress01x` -- rock driller
-Config.MiningTime = 10000 -- time player mines with pickaxe
-Config.DrillTime = 10000 -- time for each rock to be drilled
-Config.GemChance = 5 -- 5% chance of getting a rare gemstone
+Config.EnableVegModifier = true -- clears vegetation around rocks (may impact performance on lower-end systems)
+Config.RockProp = `mp_sca_rock_grp_l_03` -- rock prop model
+Config.SaltRockProp = `mp_sca_rock_grp_l_03` -- salt rock prop model
+Config.RockDriller = `p_drillpress01x` -- rock driller prop model
+Config.MiningTime = 10000 -- time in ms for pickaxe mining animation (10 seconds)
+Config.DrillTime = 10000 -- time in ms for each rock to be drilled (10 seconds)
+Config.GemChance = 5 -- percentage chance of getting a rare gemstone (5% = 1 in 20)
+Config.MaxPropsPerPlayer = 10 -- maximum mining nodes a player can place (0 = unlimited)
+Config.MinPropDistance = 1.3 -- minimum distance between placed props
+Config.NotificationDuration = 7000 -- duration in ms for notifications (7 seconds)
 
 ---------------------------------------------
--- cronjob
+-- cronjob (cron format: minute hour day month weekday)
 ---------------------------------------------
-Config.MiningCronJob = '*/5 * * * *' -- reset rocks every 5 mins
-Config.ServerNotify  = false
+Config.MiningCronJob = '*/5 * * * *' -- reset rocks every 5 minutes
+Config.ServerNotify  = false -- print server console messages for debugging
+
+---------------------------------------------
+-- security settings
+---------------------------------------------
+Config.EnableAdminLogging = true -- log prop creation/destruction for admin audits
+Config.MaxMiningDistance = 3.0 -- maximum distance in meters player can be from rock to mine it
+Config.DiscordWebhook = '' -- optional: Discord webhook URL for admin logs (leave empty to disable)
 
 ---------------------------------------------
 -- rock random outputs
@@ -77,7 +87,7 @@ Config.WorkshopTents = {
         coords = vector4(-783.67, -1504.29, 60.52, 247.55),
         blipsprite = 'blip_mp_ugc',
         blipscale = 0.2,
-        blipname = 'Valentine Rock Drilling',
+        blipname = 'Blackwater Rock Drilling',
         showblip = true
     },
     {

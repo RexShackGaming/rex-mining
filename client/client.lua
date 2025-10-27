@@ -28,7 +28,7 @@ CreateThread(function()
             local DrillingBlip = BlipAddForCoords(1664425300, v.coords)
             SetBlipSprite(DrillingBlip, joaat(v.blipsprite), true)
             SetBlipScale(DrillingBlip, v.blipscale)
-            Citizen.InvokeNative(0x9CB1A1623062F402, DrillingBlip, v.blipname)
+            SetBlipName(DrillingBlip, v.blipname)
         end
     end
 end)
@@ -38,7 +38,7 @@ local LoadAnimDict = function(dict)
     while not isLoaded do
         RequestAnimDict(dict)
         Wait(0)
-        isLoaded = not isLoaded
+        isLoaded = HasAnimDictLoaded(dict)
     end
 end
 
@@ -47,7 +47,7 @@ end
 ---------------------------------------------
 CreateThread(function()
     while true do
-        Wait(150)
+        Wait(500)
 
         local pos = GetEntityCoords(cache.ped)
         local InRange = false
@@ -77,7 +77,7 @@ CreateThread(function()
             data.obj = CreateObject(modelHash, Config.Rocks[i].x, Config.Rocks[i].y, Config.Rocks[i].z -1.8, false, false, false)
             SetEntityHeading(data.obj, Config.Rocks[i].h)
             SetEntityAsMissionEntity(data.obj, true)
-            Wait(1000)
+            Wait(100)
             FreezeEntityPosition(data.obj, true)
             SetModelAsNoLongerNeeded(data.obj)
 
@@ -106,20 +106,17 @@ CreateThread(function()
             hasSpawned = false
 
             -- create target for the entity
-            exports['rsg-target']:AddTargetEntity(data.obj, {
-                options = {
-                    {
-                        type = 'client',
-                        event = 'rex-mining:client:minerock',
-                        icon = "far fa-eye",
-                        label = locale('cl_lang_1'),
-                        action = function()
-                            TriggerEvent('rex-mining:client:minerock', data.id)
-                        end
-                    },
-                },
-                distance = 1.5
-            })
+			exports.ox_target:addLocalEntity(data.obj, {
+				{
+					name = 'mining_rock',
+					icon = 'far fa-eye',
+					label = locale('cl_lang_1'),
+					onSelect = function()
+						TriggerEvent('rex-mining:client:minerock', data.id)
+					end,
+					distance = 1.5,
+				}
+			})
             -- end of target
 
             ::continue::
@@ -148,19 +145,19 @@ RegisterNetEvent('rex-mining:client:minerock', function(rockid)
         local hasItem = RSGCore.Functions.HasItem('pickaxe')
         
         if active == 0 then
-            lib.notify({ title = locale('cl_lang_2'), duration = 7000, type = 'error' })
+            lib.notify({ title = locale('cl_lang_2'), duration = Config.NotificationDuration, type = 'info' })
             return
         end
 
         -- check if you are busy
         if isBusy then
-            lib.notify({ title = locale('cl_lang_3'), duration = 7000, type = 'error' })
+            lib.notify({ title = locale('cl_lang_3'), duration = Config.NotificationDuration, type = 'error' })
             return
         end
 
         -- check pickaxe
         if not hasItem then
-            lib.notify({ title = locale('cl_lang_4'), duration = 7000, type = 'error' })
+            lib.notify({ title = locale('cl_lang_4'), duration = Config.NotificationDuration, type = 'error' })
             return
         end
 
@@ -241,13 +238,14 @@ RegisterNetEvent('rex-mining:client:placeNewProp')
 AddEventHandler('rex-mining:client:placeNewProp', function(proptype, pHash, pos, heading)
     RSGCore.Functions.TriggerCallback('rex-mining:server:countprop', function(result)
 
-        if CanPlacePropHere(pos) and not IsPedInAnyVehicle(PlayerPedId(), false) and not isBusy then
+        if CanPlacePropHere(pos) and not IsPedInAnyVehicle(cache.ped, false) and not isBusy then
             isBusy = true
             TriggerServerEvent('rex-mining:server:newProp', proptype, pos, heading, pHash)
+            lib.notify({ title = locale('cl_lang_12'), type = 'success', duration = Config.NotificationDuration })
             isBusy = false
             return
         else
-            lib.notify({ title = locale('cl_lang_5'), type = 'error', duration = 7000 })
+            lib.notify({ title = locale('cl_lang_5'), type = 'error', duration = Config.NotificationDuration })
         end
 
     end, proptype)
@@ -262,7 +260,7 @@ function CanPlacePropHere(pos)
     for i = 1, #Config.Rocks do
         local checkprops = vector3(Config.Rocks[i].x, Config.Rocks[i].y, Config.Rocks[i].z)
         local dist = #(pos - checkprops)
-        if dist < 1.3 then
+        if dist < Config.MinPropDistance then
             canPlace = false
         end
     end

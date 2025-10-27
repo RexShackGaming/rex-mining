@@ -96,7 +96,7 @@ function PropPlacer(proptype, prophash)
     local heading = 0.0
     local object
 
-    SetCurrentPedWeapon(cache.ped, -1569615261, true)
+    SetCurrentPedWeapon(cache.ped, joaat('WEAPON_UNARMED'), true)
 
     lib.requestModel(prophash, 5000)
 
