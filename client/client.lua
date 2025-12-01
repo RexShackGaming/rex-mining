@@ -85,7 +85,7 @@ function StartMiningAnimation(oreType, zoneKey)
     if not IsPedMale(cache.ped) then
         -- Female ped animation with pickaxe prop
         local boneIndex = GetEntityBoneIndexByName(cache.ped, 'SKEL_R_Finger00')
-        local pickaxe = CreateObject(joaat('p_pickaxe01x'), GetEntityCoords(cache.ped), true, true, true)
+        pickaxeProp = CreateObject(joaat('p_pickaxe01x'), GetEntityCoords(cache.ped), true, true, true)
         SetCurrentPedWeapon(cache.ped, "WEAPON_UNARMED", true)
         FreezeEntityPosition(cache.ped, true)
         ClearPedTasksImmediately(cache.ped)
@@ -96,8 +96,9 @@ function StartMiningAnimation(oreType, zoneKey)
 
         ClearPedTasksImmediately(cache.ped)
         FreezeEntityPosition(cache.ped, false)
-        SetEntityAsNoLongerNeeded(pickaxe)
-        DeleteEntity(pickaxe)
+        SetEntityAsNoLongerNeeded(pickaxeProp)
+        DeleteEntity(pickaxeProp)
+        pickaxeProp = nil
 
         FinishMining(true, oreType, zoneKey)
     else

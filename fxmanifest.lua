@@ -18,7 +18,8 @@ server_scripts {
 }
 
 client_scripts {
-    'client/client.lua'
+    'client/client.lua',
+    'client/workshop.lua'
 }
 
 dependencies {
