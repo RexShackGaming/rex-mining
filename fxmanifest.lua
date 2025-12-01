@@ -2,29 +2,27 @@ fx_version 'cerulean'
 rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aware my resources *will* become incompatible once RedM ships.'
 game 'rdr3'
 
-description 'rex-mining'
-version '2.0.5'
+name 'rex-mining'
+author 'RexShackGaming'
+description 'Mining system for RSG Framework'
+version '2.1.0'
+url 'https://discord.gg/YUV7ebzkqs'
 
 shared_scripts {
     '@ox_lib/init.lua',
     'shared/config.lua',
 }
 
-client_scripts {
-    'client/client.lua',
-    'client/placeprop.lua',
-    'client/workshop.lua'
+server_scripts {
+    'server/server.lua'
 }
 
-server_scripts {
-    '@oxmysql/lib/MySQL.lua',
-    'server/server.lua',
-    'server/versionchecker.lua'
+client_scripts {
+    'client/client.lua'
 }
 
 dependencies {
     'rsg-core',
-    'rsg-target',
     'ox_lib',
 }
 
