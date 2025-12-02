@@ -118,7 +118,7 @@ Config.RockOutputs = {
     'coal',
     'copper',
     'iron',
-    'nitrite',
+    'nitrate',
     'sulfur',
     'zinc',
     'lead'
@@ -128,7 +128,9 @@ Config.RockOutputs = {
 -- salt rock random outputs
 ---------------------------------------------
 Config.SaltRockOutputs = {
-    'salt'
+    'salt',
+    'nitrate',
+    'sulfur'
 }
 
 ---------------------------------------------
