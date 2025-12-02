@@ -121,7 +121,9 @@ Config.RockOutputs = {
     'nitrate',
     'sulfur',
     'zinc',
-    'lead'
+    'lead',
+    'gold',
+    'silver'
 }
 
 ---------------------------------------------
