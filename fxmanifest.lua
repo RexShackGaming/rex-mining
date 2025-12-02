@@ -5,7 +5,7 @@ game 'rdr3'
 name 'rex-mining'
 author 'RexShackGaming'
 description 'Mining system for RSG Framework'
-version '2.1.0'
+version '2.1.1'
 url 'https://discord.gg/YUV7ebzkqs'
 
 shared_scripts {

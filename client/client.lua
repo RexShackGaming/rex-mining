@@ -144,3 +144,44 @@ function FinishMining(success, oreType, zoneKey)
         })
     end
 end
+
+-----------------------------------------------
+-- spawn rocks
+-----------------------------------------------
+local spawnedObjects = {}
+
+-- Function to spawn a single rock
+local function SpawnRock(coords)
+    local modelHash = GetHashKey("mp_sca_rock_grp_l_03")
+
+    -- Request the model
+    RequestModel(modelHash)
+    while not HasModelLoaded(modelHash) do
+        Wait(10)
+    end
+
+    -- Create the object
+    local obj = CreateObject(modelHash, coords.x, coords.y, coords.z - 1.5, false, false, false)
+
+    FreezeEntityPosition(obj, true)
+    SetEntityAsMissionEntity(obj, true, true)
+
+    table.insert(spawnedObjects, obj)
+end
+
+-- Spawn all rocks from config when resource starts
+Citizen.CreateThread(function()
+    for _, rock in ipairs(Config.MiningZones) do
+        SpawnRock(rock.coords)
+    end
+end)
+
+-- Optional: clean up on resource stop
+AddEventHandler('onResourceStop', function(resourceName)
+    if GetCurrentResourceName() ~= resourceName then return end
+    for _, obj in ipairs(spawnedObjects) do
+        if DoesEntityExist(obj) then
+            DeleteEntity(obj)
+        end
+    end
+end)
