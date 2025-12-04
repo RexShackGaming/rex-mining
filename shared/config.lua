@@ -89,17 +89,19 @@ Config.WorkshopTents = {
     {
         drillid = 'annesburgdrill',
         coords = vector4(2818.82, 1359.12, 70.62, 236.61),
-        blipsprite = 'blip_mp_ugc',
+        blipcoords = vector3(2818.82, 1359.12, 70.62),
+        blipsprite = 'blip_region_caravan',
         blipscale = 0.2,
-        blipname = 'Annesburg Rock Drilling',
+        blipname = 'Annesburg Mining Camp',
         showblip = true
     },
     {
         drillid = 'gaptoothdrill',
         coords = vector4(-5972.25, -3240.97, -21.65, 156.29),
-        blipsprite = 'blip_mp_ugc',
+        blipcoords = vector3(-5972.25, -3240.97, -21.65),
+        blipsprite = 'blip_region_caravan',
         blipscale = 0.2,
-        blipname = 'Rock Drilling',
+        blipname = 'Gaptooth Mining Camp',
         showblip = true
     },
 }

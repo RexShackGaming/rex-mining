@@ -1,7 +1,26 @@
 local RSGCore = exports['rsg-core']:GetCoreObject()
 local campSpawned = false
+local SpawnedDrillCampBlips = {}
 lib.locale()
 
+--------------------------------------
+-- blips
+--------------------------------------
+CreateThread(function()
+    for _, v in pairs(Config.WorkshopTents) do
+        if v.showblip then
+            local DrillCampBlip = BlipAddForCoords(1664425300, v.blipcoords)
+            SetBlipSprite(DrillCampBlip, joaat(v.blipsprite), true)
+            SetBlipScale(DrillCampBlip, v.blipscale)
+            SetBlipName(DrillCampBlip, v.blipname)
+            SpawnedDrillCampBlips[#SpawnedDrillCampBlips + 1] = DrillCampBlip
+        end
+    end
+end)
+
+--------------------------------------
+-- spawn drill camp
+--------------------------------------
 local spawnCamp = function()
     if campSpawned then
         Citizen.InvokeNative(0x58AC173A55D9D7B4, campSpawned)
