@@ -93,6 +93,8 @@ Config.WorkshopTents = {
         blipsprite = 'blip_region_caravan',
         blipscale = 0.2,
         blipname = 'Annesburg Mining Camp',
+        drillmodel = `p_drillpress01x`,
+        jobaccess = 'annesburgminer',
         showblip = true
     },
     {
@@ -102,6 +104,8 @@ Config.WorkshopTents = {
         blipsprite = 'blip_region_caravan',
         blipscale = 0.2,
         blipname = 'Gaptooth Mining Camp',
+        drillmodel = `p_drillpress01x`,
+        jobaccess = 'gaptoothminer',
         showblip = true
     },
 }

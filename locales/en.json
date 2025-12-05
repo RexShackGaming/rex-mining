@@ -21,6 +21,7 @@
     "cl_lang_14" : "Drilling %s of %s",
     "cl_lang_15" : "Rock Type",
     "cl_lang_15" : "amount of rocks you want to drill",
+    "cl_lang_16" : "Restricted Access",
     "sv_lang_1" : "creates a mining rock node (admin only)",
     "sv_lang_2" : "creates a mining salt rock node (admin only)",
     "sv_lang_3" : "loading ",
