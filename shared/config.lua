@@ -1,12 +1,13 @@
 Config = {}
 
-Config.MiningTime   = 10000 -- ms
-Config.CooldownTime = 180000 -- ms
-Config.RequiredItem = 'pickaxe' -- required item for mining
-Config.GemChance    = 15 -- percentage chance (0-100)
+Config.MiningTime           = 10000 -- ms
+Config.CooldownTime         = 180000 -- ms
+Config.RequiredItem         = 'pickaxe' -- required item for mining
+Config.GemChance            = 15 -- percentage chance (0-100)
 Config.NotificationDuration = 5000 -- ms
-Config.RockDriller = `p_drillpress01x` -- rock driller prop model
-Config.DrillTime = 10000 -- time in ms for each rock to be drilled (10 seconds)
+Config.RockDriller          = `p_drillpress01x` -- rock driller prop model
+Config.DrillTime            = 10000 -- time in ms for each rock to be drilled (10 seconds)
+Config.JobLockDrill         = false -- toggle on/off job requirement for drilling
 
 -- Mining Locations
 Config.MiningZones = {

@@ -82,12 +82,15 @@ end)
 -- choose between rock / saltrock amount
 ---------------------------------------------
 RegisterNetEvent('rex-mining:client:drillrocksinput', function(jobaccess)
-    local PlayerData = RSGCore.Functions.GetPlayerData()
-    local playerjob = PlayerData.job.name
 
-    if playerjob ~= jobaccess then
-        lib.notify({ title = locale('cl_lang_16'), duration = Config.NotificationDuration, type = 'error' })
-        return
+    if Config.JobLockDrill then
+        local PlayerData = RSGCore.Functions.GetPlayerData()
+        local playerjob = PlayerData.job.name
+
+        if playerjob ~= jobaccess then
+            lib.notify({ title = locale('cl_lang_16'), duration = Config.NotificationDuration, type = 'error' })
+            return
+        end
     end
 
     local input = lib.inputDialog('Drill Rocks', {
