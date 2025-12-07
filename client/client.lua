@@ -150,17 +150,17 @@ end
 -----------------------------------------------
 local spawnedObjects = {}
 
--- Function to spawn a single rock
+-- function to spawn a single rock
 local function SpawnRock(coords)
     local modelHash = GetHashKey("mp_sca_rock_grp_l_03")
 
-    -- Request the model
+    -- request the model
     RequestModel(modelHash)
     while not HasModelLoaded(modelHash) do
         Wait(10)
     end
 
-    -- Create the object
+    -- create the object
     local obj = CreateObject(modelHash, coords.x, coords.y, coords.z - 1.5, false, false, false)
 
     FreezeEntityPosition(obj, true)
@@ -169,14 +169,14 @@ local function SpawnRock(coords)
     table.insert(spawnedObjects, obj)
 end
 
--- Spawn all rocks from config when resource starts
+-- spawn all rocks from config when resource starts
 Citizen.CreateThread(function()
     for _, rock in ipairs(Config.MiningZones) do
         SpawnRock(rock.coords)
     end
 end)
 
--- Optional: clean up on resource stop
+-- clean up on resource stop
 AddEventHandler('onResourceStop', function(resourceName)
     if GetCurrentResourceName() ~= resourceName then return end
     for _, obj in ipairs(spawnedObjects) do
@@ -184,4 +184,128 @@ AddEventHandler('onResourceStop', function(resourceName)
             DeleteEntity(obj)
         end
     end
+end)
+
+---------------------------------------------
+-- mining main menu selector
+---------------------------------------------
+RegisterNetEvent('rex-mining:client:miningmenu', function(mineid, jobaccess)
+    if Config.JobLockMining then
+        local PlayerData = RSGCore.Functions.GetPlayerData()
+        local playerjob = PlayerData.job.name
+        local playerlevel = PlayerData.job.grade.level
+        if playerjob ~= jobaccess then
+            lib.notify({ title = locale('cl_lang_16'), duration = Config.NotificationDuration, type = 'error' })
+            return
+        end
+        if playerlevel == 0 then
+            TriggerEvent('rex-mining:client:openRecruitMenu', mineid)
+        end
+        if playerlevel == 1 then
+            TriggerEvent('rex-mining:client:openMinerMenu', mineid)
+        end
+        if playerlevel == 2 then
+            TriggerEvent('rex-mining:client:openFormanMenu', mineid)
+        end
+    else
+        TriggerEvent('rex-mining:client:drillrocksinput')
+    end
+end)
+
+---------------------------------------------
+-- recruit menu
+---------------------------------------------
+RegisterNetEvent('rex-mining:client:openRecruitMenu', function(mineid)
+    lib.registerContext(
+        {
+            id = 'mining_recruit_menu',
+            title = locale('cl_lang_18'),
+            position = 'top-right',
+            options = {
+                {   title = locale('cl_lang_19'),
+                    description = locale('cl_lang_20'),
+                    icon = 'box-open',
+                    onSelect = function()
+                        TriggerServerEvent('rex-mining:server:openRecruitStorage', 'recruit_'..mineid)
+                    end
+                },
+            }
+        }
+    )
+    lib.showContext('mining_recruit_menu')
+end)
+
+---------------------------------------------
+-- miner menu
+---------------------------------------------
+RegisterNetEvent('rex-mining:client:openMinerMenu', function(mineid)
+    lib.registerContext(
+        {
+            id = 'mining_miner_menu',
+            title = locale('cl_lang_21'),
+            position = 'top-right',
+            options = {
+                {   title = locale('cl_lang_22'),
+                    description = locale('cl_lang_23'),
+                    icon = 'fa-solid fa-bore-hole',
+                    event = 'rex-mining:client:drillrocksinput',
+                },
+                {   title = locale('cl_lang_24'),
+                    description = locale('cl_lang_25'),
+                    icon = 'box-open',
+                    onSelect = function()
+                        TriggerServerEvent('rex-mining:server:openRecruitStorage', 'recruit_'..mineid)
+                    end
+                },
+                {   title = locale('cl_lang_26'),
+                    description = locale('cl_lang_27'),
+                    icon = 'box-open',
+                    onSelect = function()
+                        TriggerServerEvent('rex-mining:server:openMinerStorage', 'miners_'..mineid)
+                    end
+                },
+            }
+        }
+    )
+    lib.showContext('mining_miner_menu')
+end)
+
+---------------------------------------------
+-- forman menu
+---------------------------------------------
+RegisterNetEvent('rex-mining:client:openFormanMenu', function(mineid)
+    lib.registerContext(
+        {
+            id = 'mining_forman_menu',
+            title = locale('cl_lang_28'),
+            position = 'top-right',
+            options = {
+                {   title = locale('cl_lang_22'),
+                    description = locale('cl_lang_23'),
+                    icon = 'fa-solid fa-bore-hole',
+                    event = 'rex-mining:client:drillrocksinput',
+                },
+                {   title = locale('cl_lang_29'),
+                    description = locale('cl_lang_30'),
+                    icon = 'fa-solid fa-user-tie',
+                    event = 'rsg-bossmenu:client:mainmenu',
+                },
+                {   title = locale('cl_lang_24'),
+                    description = locale('cl_lang_25'),
+                    icon = 'box-open',
+                    onSelect = function()
+                        TriggerServerEvent('rex-mining:server:openRecruitStorage', 'recruit_'..mineid)
+                    end
+                },
+                {   title = locale('cl_lang_26'),
+                    description = locale('cl_lang_27'),
+                    icon = 'box-open',
+                    onSelect = function()
+                        TriggerServerEvent('rex-mining:server:openMinerStorage', 'miners_'..mineid)
+                    end
+                },
+            }
+        }
+    )
+    lib.showContext('mining_forman_menu')
 end)

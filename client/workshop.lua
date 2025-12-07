@@ -60,39 +60,9 @@ CreateThread(function()
 end)
 
 ---------------------------------------------
--- target for use drill
----------------------------------------------
-CreateThread(function()
-    for _, v in pairs(Config.WorkshopTents) do
-        exports.ox_target:addModel(v.drillmodel, {
-            {
-                name = 'miningdrill',
-                icon = 'far fa-eye',
-                label = locale('cl_lang_6'),
-                onSelect = function()
-                    TriggerEvent('rex-mining:client:drillrocksinput', v.jobaccess)
-                end,
-                distance = 2.0
-            }
-        })
-    end
-end)
-
----------------------------------------------
 -- choose between rock / saltrock amount
 ---------------------------------------------
-RegisterNetEvent('rex-mining:client:drillrocksinput', function(jobaccess)
-
-    if Config.JobLockDrill then
-        local PlayerData = RSGCore.Functions.GetPlayerData()
-        local playerjob = PlayerData.job.name
-
-        if playerjob ~= jobaccess then
-            lib.notify({ title = locale('cl_lang_16'), duration = Config.NotificationDuration, type = 'error' })
-            return
-        end
-    end
-
+RegisterNetEvent('rex-mining:client:drillrocksinput', function()
     local input = lib.inputDialog('Drill Rocks', {
         { 
             type = 'select',

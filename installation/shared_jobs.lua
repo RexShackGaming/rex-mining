@@ -7,8 +7,7 @@
         grades = {
             ['0'] = { name = 'Recruit', payment = 3 },
             ['1'] = { name = 'Miner',   payment = 5 },
-            ['2'] = { name = 'Forman',  payment = 10 },
-            ['3'] = { name = 'Manager', isboss = true, payment = 15 },
+            ['2'] = { name = 'Forman', isboss = true, payment = 15 },
         },
     },
     gaptoothminer = {
@@ -20,7 +19,6 @@
         grades = {
             ['0'] = { name = 'Recruit', payment = 3 },
             ['1'] = { name = 'Miner',   payment = 5 },
-            ['2'] = { name = 'Forman',  payment = 10 },
-            ['3'] = { name = 'Manager', isboss = true, payment = 15 },
+            ['2'] = { name = 'Forman', isboss = true, payment = 15 },
         },
     },

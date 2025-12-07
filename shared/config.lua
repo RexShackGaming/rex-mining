@@ -1,15 +1,30 @@
 Config = {}
 
-Config.MiningTime           = 10000 -- ms
-Config.CooldownTime         = 180000 -- ms
-Config.RequiredItem         = 'pickaxe' -- required item for mining
-Config.GemChance            = 15 -- percentage chance (0-100)
-Config.NotificationDuration = 5000 -- ms
-Config.RockDriller          = `p_drillpress01x` -- rock driller prop model
-Config.DrillTime            = 10000 -- time in ms for each rock to be drilled (10 seconds)
-Config.JobLockDrill         = false -- toggle on/off job requirement for drilling
+---------------------------------
+-- settings
+---------------------------------
+Config.MiningTime              = 10000 -- ms
+Config.CooldownTime            = 180000 -- ms
+Config.RequiredItem            = 'pickaxe' -- required item for mining
+Config.GemChance               = 15 -- percentage chance (0-100)
+Config.NotificationDuration    = 5000 -- ms
+Config.RockDriller             = `p_drillpress01x` -- rock driller prop model
+Config.DrillTime               = 10000 -- time in ms for each rock to be drilled (10 seconds)
+Config.JobLockMining           = false -- toggle on/off job requirement for mining
+Config.RecruitStorageMaxWeight = 4000000
+Config.RecruitStorageMaxSlots  = 100
+Config.MinerStorageMaxWeight   = 4000000
+Config.MinerStorageMaxSlots    = 100
 
+---------------------------------
+-- npc settings
+---------------------------------
+Config.DistanceSpawn = 20.0
+Config.FadeIn = true
+
+--------------------------------
 -- Mining Locations
+--------------------------------
 Config.MiningZones = {
     --------------------------
     -- annesburg mine
@@ -88,30 +103,40 @@ Config.MiningZones = {
 ---------------------------------------------
 Config.WorkshopTents = {
     {
-        drillid = 'annesburgdrill',
+        mineid = 'annesburgmine',
+        name = 'Annesburg Mining Camp',
         coords = vector4(2818.82, 1359.12, 70.62, 236.61),
         blipcoords = vector3(2818.82, 1359.12, 70.62),
         blipsprite = 'blip_region_caravan',
         blipscale = 0.2,
         blipname = 'Annesburg Mining Camp',
         drillmodel = `p_drillpress01x`,
+        npcmodel = `u_m_m_bht_mineforeman`,
+        npccoords = vector4(2818.06, 1360.32, 70.68, 45.27),
+        scenario = 'WORLD_HUMAN_CLIPBOARD',
         jobaccess = 'annesburgminer',
         showblip = true
     },
     {
-        drillid = 'gaptoothdrill',
+        mineid = 'gaptoothmine',
+        name = 'Gaptooth Mining Camp',
         coords = vector4(-5972.25, -3240.97, -21.65, 156.29),
         blipcoords = vector3(-5972.25, -3240.97, -21.65),
         blipsprite = 'blip_region_caravan',
         blipscale = 0.2,
         blipname = 'Gaptooth Mining Camp',
         drillmodel = `p_drillpress01x`,
+        npcmodel = `u_m_m_bht_mineforeman`,
+        npccoords = vector4(-5970.84, -3240.00, -21.65, 339.70),
+        scenario = 'WORLD_HUMAN_CLIPBOARD',
         jobaccess = 'gaptoothminer',
         showblip = true
     },
 }
 
+--------------------------------
 -- rewards setup
+--------------------------------
 Config.Rewards = {
     ['rock']     = { item = 'rock',     minAmount = 1, maxAmount = 3 },
     ['saltrock'] = { item = 'saltrock', minAmount = 1, maxAmount = 2 }

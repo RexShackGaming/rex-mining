@@ -128,3 +128,25 @@ RegisterNetEvent('rex-mining:server:finishdrilling', function(item)
         })
     end
 end)
+
+---------------
+-- recruit storage
+----------------
+RegisterNetEvent('rex-mining:server:openRecruitStorage', function(storageName)
+    local src = source
+    local Player = RSGCore.Functions.GetPlayer(src)
+    if not Player then return end
+    local data = { label = locale('sv_lang_8'), maxweight = Config.RecruitStorageMaxWeight, slots = Config.RecruitStorageMaxSlots }
+    exports['rsg-inventory']:OpenInventory(src, storageName, data)
+end)
+
+---------------
+-- miner storage
+----------------
+RegisterNetEvent('rex-mining:server:openMinerStorage', function(storageName)
+    local src = source
+    local Player = RSGCore.Functions.GetPlayer(src)
+    if not Player then return end
+    local data = { label = locale('sv_lang_9'), maxweight = Config.MinerStorageMaxWeight, slots = Config.MinerStorageMaxSlots }
+    exports['rsg-inventory']:OpenInventory(src, storageName, data)
+end)

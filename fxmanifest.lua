@@ -5,7 +5,7 @@ game 'rdr3'
 name 'rex-mining'
 author 'RexShackGaming'
 description 'Mining system for RSG Framework'
-version '2.1.5'
+version '2.1.6'
 url 'https://discord.gg/YUV7ebzkqs'
 
 shared_scripts {
@@ -19,12 +19,13 @@ server_scripts {
 
 client_scripts {
     'client/client.lua',
-    'client/workshop.lua'
+    'client/workshop.lua',
+    'client/npcs.lua'
 }
 
 dependencies {
     'rsg-core',
-    'ox_lib',
+    'ox_lib'
 }
 
 files {
