@@ -1,5 +1,8 @@
 local RSGCore = exports['rsg-core']:GetCoreObject()
 local isMining = false
+local isBusy = false
+local mineAnimation = 'amb_work@world_human_pickaxe@wall@male_d@base'
+local anim = 'base'
 local pickaxeProp = nil
 local zoneCooldowns = {}
 lib.locale()
@@ -12,6 +15,18 @@ AddEventHandler('onResourceStop', function(resource)
         if pickaxeProp then DeleteObject(pickaxeProp) end
     end
 end)
+
+-----------------------------------------------
+-- animation loading
+-----------------------------------------------
+local LoadAnimDict = function(dict)
+    local isLoaded = HasAnimDictLoaded(dict)
+    while not isLoaded do
+        RequestAnimDict(dict)
+        Wait(0)
+        isLoaded = not isLoaded
+    end
+end
 
 -----------------------------------------------
 -- main prompt + cooldown loop
@@ -63,7 +78,41 @@ function AttemptMine(oreType, zoneKey)
 
     RSGCore.Functions.TriggerCallback('rex-mining:server:HasPickaxe', function(hasItem)
         if hasItem then
-            StartMiningAnimation(oreType, zoneKey)
+            -- do mining
+            SetCurrentPedWeapon(cache.ped, `WEAPON_UNARMED`, true)
+            if not IsPedMale(cache.ped) then
+                -- female ped
+                isBusy = true
+                local coords = GetEntityCoords(cache.ped)
+                local boneIndex = GetEntityBoneIndexByName(cache.ped, 'SKEL_R_Finger00')
+                local pickaxe = CreateObject(joaat('p_pickaxe01x'), coords, true, true, true)
+                SetCurrentPedWeapon(cache.ped, "WEAPON_UNARMED", true)
+                FreezeEntityPosition(cache.ped, true)
+                ClearPedTasksImmediately(cache.ped)
+                AttachEntityToEntity(pickaxe, cache.ped, boneIndex, -0.35, -0.21, -0.39, -8.0, 47.0, 11.0, true, false, true, false, 0, true)
+                TriggerEvent('rex-mining:client:animation')
+                Wait(Config.MiningTime)
+                ClearPedTasksImmediately(cache.ped)
+                FreezeEntityPosition(cache.ped, false)
+                SetEntityAsNoLongerNeeded(pickaxe)
+                DeleteEntity(pickaxe)
+                SetCurrentPedWeapon(cache.ped, `WEAPON_UNARMED`, true)
+                FinishMining(true, oreType, zoneKey)
+                isBusy = false
+            else
+                -- male ped
+                isBusy = true
+                SetCurrentPedWeapon(cache.ped, "WEAPON_UNARMED", true)
+                FreezeEntityPosition(cache.ped, true)
+                ClearPedTasksImmediately(cache.ped)
+                TaskStartScenarioInPlace(cache.ped, joaat('WORLD_HUMAN_PICKAXE_WALL'), Config.MiningTime, true, false, false, false)
+                Wait(Config.MiningTime)
+                ClearPedTasksImmediately(cache.ped)
+                FreezeEntityPosition(cache.ped, false)
+                SetCurrentPedWeapon(cache.ped, `WEAPON_UNARMED`, true)
+                FinishMining(true, oreType, zoneKey)
+                isBusy = false
+            end
         else
             lib.notify({
                 title = 'Mining',
@@ -75,47 +124,16 @@ function AttemptMine(oreType, zoneKey)
     end, Config.RequiredItem)
 end
 
------------------------------------------------
--- mining animation handler
------------------------------------------------
-function StartMiningAnimation(oreType, zoneKey)
-    isMining = true
-    lib.hideTextUI()
-
-    if not IsPedMale(cache.ped) then
-        -- Female ped animation with pickaxe prop
-        local boneIndex = GetEntityBoneIndexByName(cache.ped, 'SKEL_R_Finger00')
-        pickaxeProp = CreateObject(joaat('p_pickaxe01x'), GetEntityCoords(cache.ped), true, true, true)
-        SetCurrentPedWeapon(cache.ped, "WEAPON_UNARMED", true)
-        FreezeEntityPosition(cache.ped, true)
-        ClearPedTasksImmediately(cache.ped)
-        AttachEntityToEntity(pickaxe, cache.ped, boneIndex, -0.35, -0.21, -0.39, -8.0, 47.0, 11.0, true, false, true, false, 0, true)
-        TriggerEvent('rex-mining:client:animation')
-        
-        Wait(Config.MiningTime)
-
-        ClearPedTasksImmediately(cache.ped)
-        FreezeEntityPosition(cache.ped, false)
-        SetEntityAsNoLongerNeeded(pickaxeProp)
-        DeleteEntity(pickaxeProp)
-        pickaxeProp = nil
-
-        FinishMining(true, oreType, zoneKey)
-    else
-        -- Male ped scenario
-        SetCurrentPedWeapon(cache.ped, "WEAPON_UNARMED", true)
-        FreezeEntityPosition(cache.ped, true)
-        ClearPedTasksImmediately(cache.ped)
-        TaskStartScenarioInPlace(cache.ped, joaat('WORLD_HUMAN_PICKAXE_WALL'), Config.MiningTime, true, false, false, false)
-        
-        Wait(Config.MiningTime)
-        
-        ClearPedTasksImmediately(cache.ped)
-        FreezeEntityPosition(cache.ped, false)
-        
-        FinishMining(true, oreType, zoneKey)
+---------------------------------------------
+-- used for female mining animation
+---------------------------------------------
+AddEventHandler('rex-mining:client:animation', function()
+    LoadAnimDict(mineAnimation)
+    while not HasAnimDictLoaded(mineAnimation) do
+        Wait(100)
     end
-end
+    TaskPlayAnim(cache.ped, mineAnimation, anim, 3.0, 3.0, -1, 1, 0, false, false, false)
+end)
 
 -----------------------------------------------
 -- finish mining and apply cooldown
