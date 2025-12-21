@@ -96,6 +96,24 @@ Config.MiningZones = {
     { coords = vec3(-5957.90869140625, -3234.35009765625, -19.95751953125),     radius = 2.0, type = 'rock' },
     { coords = vec3(-5955.3564453125, -3243.451904296875, -21.04887962341308),  radius = 2.0, type = 'rock' },
     { coords = vec3(-5964.81689453125, -3195.2392578125, -21.07339096069336),   radius = 2.0, type = 'rock' },
+    --------------------------
+    -- grizzlies mine
+    --------------------------
+    { coords = vec3(-1433.65, 1177.55, 226.37), radius = 2.0, type = 'rock' },
+    { coords = vec3(-1447.15, 1196.31, 226.36), radius = 2.0, type = 'rock' },
+    { coords = vec3(-1442.54, 1209.02, 226.37), radius = 2.0, type = 'rock' },
+    { coords = vec3(-1426.14, 1217.07, 223.32), radius = 2.0, type = 'saltrock' },
+    { coords = vec3(-1413.81, 1214.39, 222.43), radius = 2.0, type = 'rock' },
+    { coords = vec3(-1409.68, 1202.37, 223.66), radius = 2.0, type = 'rock' },
+    { coords = vec3(-1428.74, 1202.25, 225.50), radius = 2.0, type = 'rock' },
+    { coords = vec3(-1419.31, 1187.75, 225.48), radius = 2.0, type = 'rock' },
+    { coords = vec3(-1410.18, 1189.06, 225.49), radius = 2.0, type = 'saltrock' },
+    { coords = vec3(-1403.09, 1176.55, 222.13), radius = 2.0, type = 'rock' },
+    { coords = vec3(-1391.44, 1172.18, 222.17), radius = 2.0, type = 'rock' },
+    { coords = vec3(-1393.17, 1185.74, 221.96), radius = 2.0, type = 'rock' },
+    { coords = vec3(-1387.19, 1182.66, 222.09), radius = 2.0, type = 'saltrock' },
+    { coords = vec3(-1412.58, 1182.56, 225.53), radius = 2.0, type = 'rock' },
+
 }
 
 ---------------------------------------------
@@ -132,6 +150,22 @@ Config.WorkshopTents = {
         jobaccess = 'gaptoothminer',
         showblip = true
     },
+    {
+        mineid = 'grizzliesmine',
+        name = 'Grizzlies Mining Camp',
+        coords = vector4(-1403.07, 1125.83, 228.33, 229.09),
+        blipcoords = vector3(-1403.07, 1125.83, 228.33),
+        blipsprite = 'blip_region_caravan',
+        blipscale = 0.2,
+        blipname = 'Grizzlies Mining Camp',
+        drillmodel = `p_drillpress01x`,
+        npcmodel = `u_m_m_bht_mineforeman`,
+        npccoords = vector4(-1404.16, 1125.72, 228.53, 40.30),
+        scenario = 'WORLD_HUMAN_CLIPBOARD',
+        jobaccess = 'grizzliesminer',
+        showblip = true
+    },
+
 }
 
 --------------------------------

@@ -1,7 +1,6 @@
     -----------------------------------------------
     -- YOUR CUSTOM ITEMS
     -----------------------------------------------
-    pickaxe        = { name = 'pickaxe',        label = 'Pickaxe',        weight = 100,  type = 'item', image = 'pickaxe.png',        unique = false, useable = false, shouldClose = true, description = 'mining tool for hitting them rocks'},
     rock           = { name = 'rock',           label = 'Rock',           weight = 1000, type = 'item', image = 'rock.png',           unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
     saltrock       = { name = 'saltrock',       label = 'Salt Rock',      weight = 1000, type = 'item', image = 'saltrock.png',       unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
     salt           = { name = 'salt',           label = 'Salt',           weight = 100,  type = 'item', image = 'salt.png',           unique = false, useable = false, shouldClose = true, description = 'Output from mining' },
